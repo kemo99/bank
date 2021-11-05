@@ -32,7 +32,6 @@ export class DepositAccountComponent implements OnInit {
     console.log(this.accountService.accounts);
     isAmountAdded = this.accountService.addAmount(account.accountName, +account.amount);
     isAmountAdded ? alert(`${account.amount} is added`) : alert(`${account.amount} not added`);
-    ;
   }
 
 }

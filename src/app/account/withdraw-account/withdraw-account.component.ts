@@ -32,7 +32,6 @@ export class WithdrawAccountComponent implements OnInit {
     console.log(this.accountService.accounts);
     isAmountAdded = this.accountService.withdrawAmount(account.accountName, +account.amount);
     isAmountAdded ? alert(`${account.amount} is withdrawded`) : alert('you do not have anough money in your balance');
-    ;
   }
 
 }
