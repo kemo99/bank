@@ -1,0 +1,15 @@
+.withdraw {
+    padding-top: 20px;
+    width: 100%;
+    
+    .account-name,
+    .withdraw-amount {
+        min-width: 150px;
+        max-width: 500px;
+        width: 100%;
+    }
+
+    .withdraw-amount {
+        margin-left: 10px;
+    }
+}

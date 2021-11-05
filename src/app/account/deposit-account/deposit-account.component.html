@@ -1,0 +1,22 @@
+<div class="deposit">
+    <form [formGroup]="createAccountForm" (ngSubmit)="makeDeposit(createAccountForm.value)">
+        <mat-form-field class="account-name" appearance="fill">
+            <mat-label>addAccount</mat-label>
+            <input matInput type="text" formControlName="accountName" placeholder="Enter the account name">
+            <mat-hint align="end">Not more then 15 characters long.</mat-hint>
+            <mat-error *ngIf="hasError('accountName', 'required')">
+                Account name is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="deposit-amount" appearance="fill">
+            <mat-label>Amount</mat-label>
+            <input matInput type="text" formControlName="amount" placeholder="Enter the amount">
+            <mat-error *ngIf="hasError('amount', 'required')">
+                Account name is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+
+        <button class="btn-createAccount" type="submit" [disabled]="!createAccountForm.valid">Make Deposit</button>
+    </form>
+</div>
