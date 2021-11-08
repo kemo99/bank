@@ -1,0 +1,33 @@
+.container {
+    height: 400px;
+    overflow: auto;
+    padding-top: 20px;
+
+    table {
+        width: 100%;
+    }
+
+    .search-account {
+        min-width: 150px;
+        max-width: 500px;
+        width: 100%;
+
+        .account-field {
+            width: 100%;
+        }
+
+        /**.btn-searchAccount {
+            margin-left: 10px;
+        }*/
+    }
+
+    .history {
+        padding-top: 50px;
+
+        p {
+            text-align: center;
+        }
+    }
+    
+}
+  
