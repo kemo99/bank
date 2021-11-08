@@ -30,7 +30,7 @@ export class WithdrawAccountComponent implements OnInit {
       balance: number;
     };
     result = this.accountService.withdrawAmount(account.accountName, +account.amount);
-    result.isWithdrawed ? alert(`${account.amount} is withdrawded`) 
+    result.isWithdrawed ? alert(`${account.amount} € is withdrawded on your account`) 
                         : result.balance < 0 ? alert('This account name does not exist')
                                              : alert(`You do not have enough money in your balance. Check your balance`);
 

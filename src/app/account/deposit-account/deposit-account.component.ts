@@ -27,7 +27,7 @@ export class DepositAccountComponent implements OnInit {
   makeDeposit(account: { accountName: string, amount: string }): void {
     let isAmountAdded = false;
     isAmountAdded = this.accountService.addAmount(account.accountName, +account.amount);
-    isAmountAdded ? alert(`${account.amount} is added on your account`) : alert('This account name does not exist');
+    isAmountAdded ? alert(`${account.amount} € is added on your account`) : alert('This account name does not exist');
     
     // reset the form field
     this.depositAccountForm.reset();
