@@ -12,9 +12,8 @@ export class BalanceAccountComponent implements OnInit {
 
   displayedColumns = ['date', 'operation', 'amount'];
   dataSource: History[] = [];
-  balance: number = 0;
+  balance: number = -1;
   searchAccountForm!: FormGroup;
-  accountName!: FormControl;
 
   constructor(
     private accountService: AccountService
@@ -28,10 +27,14 @@ export class BalanceAccountComponent implements OnInit {
 
   searchAccountBalance(accountName: string): void {
     let account = this.accountService.checkBalance(accountName);
-    account.forEach(data => {
-        this.balance = data.balance;
-        this.dataSource = data.history;
-    });
+    if (account.length === 0) {
+      alert('This account name does not exist');
+    } else {
+        account.forEach(data => {
+          this.balance = data.balance;
+          this.dataSource = data.history;
+        });
+    }  
     this.dataSource = [...this.dataSource];  //refresh the dataSource
   }
 

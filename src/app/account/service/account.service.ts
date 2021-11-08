@@ -10,16 +10,21 @@ export class AccountService {
 
   constructor() { }
 
-  createAccount(accountName: string): void {
-    this.accounts.push({
-      name: accountName,
-      balance: 0,
-      history: []
-    });
+  createAccount(accountName: string): boolean {
+    let isAdded: boolean = false;
+    if (!this.accountExist(accountName)) {
+      this.accounts.push({
+        name: accountName,
+        balance: 0,
+        history: []
+      });
+      isAdded = true;
+    }
+    return isAdded;
   }
 
   addAmount(accountName: string, amount: number): boolean {
-    let result: boolean = false;
+    let result = false;
     this.accounts.forEach(account => {
       if (account.name === accountName) {
         account.balance += amount;
@@ -35,8 +40,14 @@ export class AccountService {
     return result;
   }
 
-  withdrawAmount(accountName: string, amount: number): boolean {
-    let result: boolean = false;
+  withdrawAmount(accountName: string, amount: number): {
+    isWithdrawed: boolean;
+    balance: number;
+  } {
+
+    let isWithdrawed: boolean = false;
+    let balance: number = -1;
+
     this.accounts.forEach(account => {
       if (account.name === accountName) {
         if (account.balance >= amount) {
@@ -47,25 +58,22 @@ export class AccountService {
             amount: amount
           }
           account.history!.push(history);
-          result = true;
-        }  
-      } 
+          isWithdrawed = true;
+        }
+        balance = account.balance; 
+      }
     });
-    return result;
+    return {
+      isWithdrawed: isWithdrawed,
+      balance: balance
+    };
   }
 
   checkBalance(accountName: string): Account[] {
-    //let accountBalance: Account[] = [];
-
-    /**this.accounts.forEach(account => {
-      if (account.name === accountName) {
-        accountBalance.push(account);
-        console.log(true);
-      }
-    });*/
-
     return this.accounts.filter(account => account.name === accountName);
-    //return accountBalance;
   }
 
+  accountExist(accountName: string): boolean {
+    return this.accounts.filter(account => account.name === accountName).length > 0 ? true : false;
+  }
 }

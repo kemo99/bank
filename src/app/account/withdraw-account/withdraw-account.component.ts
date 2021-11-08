@@ -9,8 +9,6 @@ import { AccountService } from '../service/account.service';
 })
 export class WithdrawAccountComponent implements OnInit {
 
-  accountName!: FormControl;
-  amount!: FormControl;
   withdrawAccountForm!: FormGroup;
   
   constructor(private accountService: AccountService) { }
@@ -27,9 +25,17 @@ export class WithdrawAccountComponent implements OnInit {
   }
 
   withdrawAmount(account: { accountName: string, amount: string }): void {
-    let isAmountAdded = false;
-    isAmountAdded = this.accountService.withdrawAmount(account.accountName, +account.amount);
-    isAmountAdded ? alert(`${account.amount} is withdrawded`) : alert('you do not have anough money in your balance');
+    let result: {
+      isWithdrawed: boolean;
+      balance: number;
+    };
+    result = this.accountService.withdrawAmount(account.accountName, +account.amount);
+    result.isWithdrawed ? alert(`${account.amount} is withdrawded`) 
+                        : result.balance < 0 ? alert('This account name does not exist')
+                                             : alert(`You do not have enough money in your balance. Check your balance`);
+
+    // reset the form field
+    this.withdrawAccountForm.reset();
   }
 
 }

@@ -9,7 +9,6 @@ import { AccountService } from '../service/account.service';
 })
 export class CreateAccountComponent implements OnInit {
 
-  accountName!: FormControl;
   createAccountForm!: FormGroup;
   
   constructor(private accountService: AccountService) { }
@@ -25,8 +24,12 @@ export class CreateAccountComponent implements OnInit {
   }
 
   createAccount(accountName: string): void {
-    this.accountService.createAccount(accountName);
-    alert(`${accountName} is added`);
+    let isAdded = false;
+    isAdded = this.accountService.createAccount(accountName);
+    isAdded ? alert(`${accountName} is added`) : alert(`${accountName} already exist`);
+
+    // reset the form field
+    this.createAccountForm.reset();
   }
 
 }

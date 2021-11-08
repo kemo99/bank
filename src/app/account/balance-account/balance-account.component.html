@@ -14,10 +14,9 @@
             <button class="btn-searchAccount" type="submit" [disabled]="!searchAccountForm.valid">History</button>
         </form>
     </div>
+    <p *ngIf="balance >= 0">Your balance is {{ balance }}</p>
     <ng-container *ngIf="dataSource.length > 0">
     <div class="history">
-        <p>Your balance is {{ balance }}</p>
-        
             <table mat-table [dataSource]="dataSource">
         
             <!-- Date Column -->
