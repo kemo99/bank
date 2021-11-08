@@ -11,5 +11,5 @@ export interface History {
 export interface Account {
     name: string;
     balance: number;
-    history?: History;
+    history: History[];
 }

@@ -28,8 +28,6 @@ export class DepositAccountComponent implements OnInit {
 
   makeDeposit(account: any): void {
     let isAmountAdded = false;
-    console.log("the form has been fill " + account.accountName + " " + account.amount);
-    console.log(this.accountService.accounts);
     isAmountAdded = this.accountService.addAmount(account.accountName, +account.amount);
     isAmountAdded ? alert(`${account.amount} is added`) : alert(`${account.amount} not added`);
   }

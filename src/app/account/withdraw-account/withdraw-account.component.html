@@ -1,7 +1,7 @@
 <div class="withdraw">
     <form [formGroup]="createAccountForm" (ngSubmit)="withdrawAmount(createAccountForm.value)">
         <mat-form-field class="account-name" appearance="fill">
-            <mat-label>addAccount</mat-label>
+            <mat-label>Account</mat-label>
             <input matInput type="text" formControlName="accountName" placeholder="Enter the account name">
             <mat-hint align="end">Not more then 15 characters long.</mat-hint>
             <mat-error *ngIf="hasError('accountName', 'required')">
@@ -17,6 +17,6 @@
             </mat-error>
         </mat-form-field>
 
-        <button class="btn-createAccount" type="submit" [disabled]="!createAccountForm.valid">Withdraw</button>
+        <button class="btn-searchAccount" type="submit" [disabled]="!createAccountForm.valid">Withdraw</button>
     </form>
 </div>

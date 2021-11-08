@@ -25,7 +25,6 @@ export class CreateAccountComponent implements OnInit {
   }
 
   createAccount(name: any): void {
-    console.log("the form has been fill " + name.accountName);
     this.accountService.createAccount(name.accountName);
     alert(`${name.accountName} is added`);
   }

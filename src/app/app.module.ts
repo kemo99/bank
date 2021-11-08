@@ -11,6 +11,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CreateAccountComponent } from './account/create-account/create-account.component';
 import { DepositAccountComponent } from './account/deposit-account/deposit-account.component';
 import { WithdrawAccountComponent } from './account/withdraw-account/withdraw-account.component';
+import { BalanceAccountComponent } from './account/balance-account/balance-account.component';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,8 @@ import { WithdrawAccountComponent } from './account/withdraw-account/withdraw-ac
     AccountComponent,
     CreateAccountComponent,
     DepositAccountComponent,
-    WithdrawAccountComponent
+    WithdrawAccountComponent,
+    BalanceAccountComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +30,8 @@ import { WithdrawAccountComponent } from './account/withdraw-account/withdraw-ac
     MatInputModule,
     MatTabsModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]
