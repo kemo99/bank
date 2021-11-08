@@ -11,22 +11,22 @@ export class DepositAccountComponent implements OnInit {
 
   accountName!: FormControl;
   amount!: FormControl;
-  createAccountForm!: FormGroup;
+  depositAccountForm!: FormGroup;
   
   constructor(private accountService: AccountService) { }
 
   ngOnInit(): void {
-    this.createAccountForm = new FormGroup({
+    this.depositAccountForm = new FormGroup({
       accountName: new FormControl('', [Validators.required, Validators.maxLength(15)]),
       amount: new FormControl('', [Validators.required])
     });
   }
 
   hasError = (controlName: string, errorName: string) => {
-    return this.createAccountForm.controls[controlName].hasError(errorName);
+    return this.depositAccountForm.controls[controlName].hasError(errorName);
   }
 
-  makeDeposit(account: any): void {
+  makeDeposit(account: { accountName: string, amount: string }): void {
     let isAmountAdded = false;
     isAmountAdded = this.accountService.addAmount(account.accountName, +account.amount);
     isAmountAdded ? alert(`${account.amount} is added`) : alert(`${account.amount} not added`);

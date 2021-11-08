@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../service/account.service';
 import { History } from '../model/account';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -17,8 +17,7 @@ export class BalanceAccountComponent implements OnInit {
   accountName!: FormControl;
 
   constructor(
-    private accountService: AccountService,
-    private ref: ChangeDetectorRef
+    private accountService: AccountService
   ) { }
 
   ngOnInit(): void {
@@ -27,8 +26,8 @@ export class BalanceAccountComponent implements OnInit {
     });
   }
 
-  searchAccountBalance(name: any): void {
-    let account = this.accountService.checkBalance(name.accountName);
+  searchAccountBalance(accountName: string): void {
+    let account = this.accountService.checkBalance(accountName);
     account.forEach(data => {
         this.balance = data.balance;
         this.dataSource = data.history;

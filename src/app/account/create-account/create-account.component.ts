@@ -24,9 +24,9 @@ export class CreateAccountComponent implements OnInit {
     return this.createAccountForm.controls[controlName].hasError(errorName);
   }
 
-  createAccount(name: any): void {
-    this.accountService.createAccount(name.accountName);
-    alert(`${name.accountName} is added`);
+  createAccount(accountName: string): void {
+    this.accountService.createAccount(accountName);
+    alert(`${accountName} is added`);
   }
 
 }

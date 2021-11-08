@@ -1,5 +1,5 @@
 <div class="withdraw">
-    <form [formGroup]="createAccountForm" (ngSubmit)="withdrawAmount(createAccountForm.value)">
+    <form [formGroup]="withdrawAccountForm" (ngSubmit)="withdrawAmount(withdrawAccountForm.value)">
         <mat-form-field class="account-name" appearance="fill">
             <mat-label>Account</mat-label>
             <input matInput type="text" formControlName="accountName" placeholder="Enter the account name">
@@ -17,6 +17,6 @@
             </mat-error>
         </mat-form-field>
 
-        <button class="btn-searchAccount" type="submit" [disabled]="!createAccountForm.valid">Withdraw</button>
+        <button class="btn-searchAccount" type="submit" [disabled]="!withdrawAccountForm.valid">Withdraw</button>
     </form>
 </div>

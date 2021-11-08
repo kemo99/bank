@@ -1,5 +1,5 @@
 <div class="create-account">
-    <form [formGroup]="createAccountForm" (ngSubmit)="createAccount(createAccountForm.value)">
+    <form [formGroup]="createAccountForm" (ngSubmit)="createAccount(createAccountForm.value.accountName)">
         <mat-form-field class="account-field" appearance="fill">
             <mat-label>Add account</mat-label>
             <input matInput type="text" formControlName="accountName" placeholder="Enter the account name">

@@ -1,7 +1,7 @@
 <div class="container">
 
     <div class="search-account">
-        <form [formGroup]="searchAccountForm" (ngSubmit)="searchAccountBalance(searchAccountForm.value)">
+        <form [formGroup]="searchAccountForm" (ngSubmit)="searchAccountBalance(searchAccountForm.value.accountName)">
             <mat-form-field class="account-field" appearance="fill">
                 <mat-label>Search account history</mat-label>
                 <input matInput type="text" formControlName="accountName" placeholder="Enter the account name">
