@@ -23,57 +23,39 @@ export class AccountService {
     return isAdded;
   }
 
-  addAmount(accountName: string, amount: number): boolean {
-    let result = false;
-    this.accounts.forEach(account => {
-      if (account.name === accountName) {
-        account.balance += amount;
-        let history: History = {
-          operation: Operation.DEPOSIT,
-          date: new Date(),
-          amount: amount
-        }
-        account.history!.push(history);
-        result = true;
-      } 
-    });
-    return result;
-  }
-
-  withdrawAmount(accountName: string, amount: number): {
-    isWithdrawed: boolean;
-    balance: number;
-  } {
-
-    let isWithdrawed: boolean = false;
-    let balance: number = -1;
-
-    this.accounts.forEach(account => {
-      if (account.name === accountName) {
-        if (account.balance >= amount) {
-          account.balance = account.balance - amount;
-          let history: History = {
-            operation: Operation.WITHDRAW,
-            date: new Date(),
-            amount: amount
-          }
-          account.history!.push(history);
-          isWithdrawed = true;
-        }
-        balance = account.balance; 
+  operation(accountName: string, amount: number, type: Operation): boolean {
+    let success: boolean = false;
+    
+    if(this.accountExist(accountName)) {
+      let history: History = {
+        operation: type,
+        date: new Date(),
+        amount: amount
       }
-    });
-    return {
-      isWithdrawed: isWithdrawed,
-      balance: balance
-    };
+
+      this.getAccount(accountName).forEach(account => {
+        if (type === Operation.DEPOSIT) {
+          account.balance += amount;
+          account.history!.push(history);
+          success = true;
+        } else {
+          // balance can not be less than 0
+            if (account.balance >= amount) {
+              account.balance = account.balance - amount;
+              account.history!.push(history);
+              success = true;
+            }
+        }
+      })
+    }
+    return success;
   }
 
-  checkBalance(accountName: string): Account[] {
+  private accountExist(accountName: string): boolean {
+    return this.accounts.filter(account => account.name === accountName).length > 0;
+  }
+
+  getAccount(accountName: string): Account[] {
     return this.accounts.filter(account => account.name === accountName);
-  }
-
-  accountExist(accountName: string): boolean {
-    return this.accounts.filter(account => account.name === accountName).length > 0 ? true : false;
   }
 }

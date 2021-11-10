@@ -1,5 +1,4 @@
 <div class="container">
-
     <div class="search-account">
         <form [formGroup]="searchAccountForm" (ngSubmit)="searchAccountBalance(searchAccountForm.value.accountName)">
             <mat-form-field class="account-field" appearance="fill">
@@ -39,10 +38,7 @@
         
             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
-        
+            </table>   
      </div>
     </ng-container>
-   
-   
 </div>

@@ -26,7 +26,7 @@ export class BalanceAccountComponent implements OnInit {
   }
 
   searchAccountBalance(accountName: string): void {
-    let account = this.accountService.checkBalance(accountName);
+    let account = this.accountService.getAccount(accountName);
     if (account.length === 0) {
       alert('This account name does not exist');
     } else {

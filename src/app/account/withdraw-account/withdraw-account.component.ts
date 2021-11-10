@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Operation } from '../model/account';
 import { AccountService } from '../service/account.service';
 
 @Component({
@@ -25,17 +26,13 @@ export class WithdrawAccountComponent implements OnInit {
   }
 
   withdrawAmount(account: { accountName: string, amount: string }): void {
-    let result: {
-      isWithdrawed: boolean;
-      balance: number;
-    };
-    result = this.accountService.withdrawAmount(account.accountName, +account.amount);
-    result.isWithdrawed ? alert(`${account.amount} € is withdrawded on your account`) 
-                        : result.balance < 0 ? alert('This account name does not exist')
-                                             : alert(`You do not have enough money in your balance. Check your balance`);
-
-    // reset the form field
-    this.withdrawAccountForm.reset();
+    let success = this.accountService.operation(account.accountName, +account.amount, Operation.WITHDRAW);
+    if (success) {
+      alert(`${account.amount} € is withdrawded on your account`);
+      this.withdrawAccountForm.reset();
+    } else {
+      alert('Check your account name or your balance');
+    }
   }
 
 }

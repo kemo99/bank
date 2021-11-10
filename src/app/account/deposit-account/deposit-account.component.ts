@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Operation } from '../model/account';
 import { AccountService } from '../service/account.service';
 
 @Component({
@@ -25,12 +26,13 @@ export class DepositAccountComponent implements OnInit {
   }
 
   makeDeposit(account: { accountName: string, amount: string }): void {
-    let isAmountAdded = false;
-    isAmountAdded = this.accountService.addAmount(account.accountName, +account.amount);
-    isAmountAdded ? alert(`${account.amount} € is added on your account`) : alert('This account name does not exist');
-    
-    // reset the form field
-    this.depositAccountForm.reset();
+    let success = this.accountService.operation(account.accountName, +account.amount, Operation.DEPOSIT);
+    if (success) {
+      alert(`${account.amount} € is added on your account`);
+      this.depositAccountForm.reset();
+     } else {
+      alert('This account name does not exist');
+     }
   }
 
 }
