@@ -1,0 +1,69 @@
+{
+    "menu": {
+        "createAccount": "Create Account",
+        "deposit": "Deposit",
+        "withdrawal": "Withdrawal",
+        "balance": "Balance"
+    },
+    "createAccount": {
+        "form": {
+            "label": "Add account",
+            "inputLength": "Not more then 15 characters long.",
+            "inputRequired": "Account name is required",
+            "button": {
+               "validate": "Add account"
+            }
+        }
+    },
+    "depositAccount": {
+        "form": {
+            "account": {
+                "label": "Account",
+                "inputLength": "Not more then 15 characters long.",
+                "inputRequired": "Account name is required"
+            },
+            "deposit": {
+                "label": "Amount",
+                "inputRequired": "Amount is required"
+            },
+            "button": {
+               "validate": "Make Deposit"
+            }
+        }
+    },
+    "withdrawalAccount": {
+        "form": {
+            "account": {
+                "label": "Account",
+                "inputLength": "Not more then 15 characters long.",
+                "inputRequired": "Account name is required"
+            },
+            "withdrawal": {
+                "label": "Amount",
+                "inputRequired": "Amount is required"
+            },
+            "button": {
+               "validate": "Withdraw"
+            }
+        }
+    },
+    "balanceAccount": {
+        "form": {
+            "account": {
+                "label": "Search account history",
+                "inputLength": "Not more then 15 characters long.",
+                "inputRequired": "Account name is required"
+            },
+            "button": {
+               "validate": "History"
+            }
+        },
+        "balance": "Your balance is",
+        "operation": {
+            "date": "Date",
+            "operationType": "Operation",
+            "amount": "Amount"
+        },
+        "devise": "€"
+    }
+}

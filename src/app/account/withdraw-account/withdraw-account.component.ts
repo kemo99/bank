@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Operation } from '../model/account';
 import { AccountService } from '../service/account.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogContentComponent } from '../dialog-content/dialog-content.component';
 
 @Component({
   selector: 'app-withdraw-account',
@@ -12,7 +14,10 @@ export class WithdrawAccountComponent implements OnInit {
 
   withdrawAccountForm!: FormGroup;
   
-  constructor(private accountService: AccountService) { }
+  constructor(
+    private accountService: AccountService,
+    private dialog: MatDialog
+    ) { }
 
   ngOnInit(): void {
     this.withdrawAccountForm = new FormGroup({
@@ -26,13 +31,20 @@ export class WithdrawAccountComponent implements OnInit {
   }
 
   withdrawAmount(account: { accountName: string, amount: string }): void {
+    let message = "";
     let success = this.accountService.operation(account.accountName, +account.amount, Operation.WITHDRAW);
     if (success) {
-      alert(`${account.amount} € is withdrawded on your account`);
+      message = `${account.amount} € is withdrawded on your account`;
+      //alert(`${account.amount} € is withdrawded on your account`);
       this.withdrawAccountForm.reset();
     } else {
-      alert('Check your account name or your balance');
+      message = 'Check your account name or your balance';
+      //alert('Check your account name or your balance');
     }
+
+    this.dialog.open(DialogContentComponent, {
+      data: { content: message }
+    });
   }
 
 }

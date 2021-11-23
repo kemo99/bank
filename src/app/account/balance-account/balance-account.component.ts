@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../service/account.service';
 import { History } from '../model/account';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogContentComponent } from '../dialog-content/dialog-content.component';
 
 @Component({
   selector: 'app-balance-account',
@@ -16,7 +18,8 @@ export class BalanceAccountComponent implements OnInit {
   searchAccountForm!: FormGroup;
 
   constructor(
-    private accountService: AccountService
+    private accountService: AccountService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -28,7 +31,10 @@ export class BalanceAccountComponent implements OnInit {
   searchAccountBalance(accountName: string): void {
     let account = this.accountService.getAccount(accountName);
     if (account.length === 0) {
-      alert('This account name does not exist');
+      //alert('This account name does not exist');
+      this.dialog.open(DialogContentComponent, {
+        data: { content: 'This account name does not exist'}
+      });
     } else {
         account.forEach(data => {
           this.balance = data.balance;

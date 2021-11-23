@@ -10,7 +10,7 @@
                 </mat-error>
             </mat-form-field>
     
-            <button class="btn-searchAccount" type="submit" [disabled]="!searchAccountForm.valid">History</button>
+            <button mat-button class="btn-searchAccount" type="submit" [disabled]="!searchAccountForm.valid">History</button>
         </form>
     </div>
     <p *ngIf="balance >= 0">Your balance is {{ balance }} €</p>
