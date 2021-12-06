@@ -76,8 +76,6 @@ describe('CreateAccountComponent Integration', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
     service = new AccountService();
-    //serviceSpy = jasmine.createSpyObj('AccountService', ['createAccount']);
-    //serviceSpy.createAccount.and.returnValue(true);
   });
 
   it('should create', () => {
