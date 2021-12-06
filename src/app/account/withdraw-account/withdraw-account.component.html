@@ -1,22 +1,24 @@
 <div class="withdraw">
     <form [formGroup]="withdrawAccountForm" (ngSubmit)="withdrawAmount(withdrawAccountForm.value)">
         <mat-form-field class="account-name" appearance="fill">
-            <mat-label>Account</mat-label>
-            <input matInput type="text" formControlName="accountName" placeholder="Enter the account name">
-            <mat-hint align="end">Not more then 15 characters long.</mat-hint>
+            <mat-label>{{'withdrawalAccount.form.account.label' | translate}}</mat-label>
+            <input matInput type="text" formControlName="accountName" placeholder="{{'withdrawalAccount.form.account.placeholder' | translate}}">
+            <mat-hint align="end">{{'withdrawalAccount.form.account.inputLength' | translate}}</mat-hint>
             <mat-error *ngIf="hasError('accountName', 'required')">
-                Account name is <strong>required</strong>
+                <strong>{{'withdrawalAccount.form.account.inputRequired' | translate}}</strong>
             </mat-error>
         </mat-form-field>
 
         <mat-form-field class="withdraw-amount" appearance="fill">
-            <mat-label>Amount</mat-label>
-            <input matInput type="text" formControlName="amount" placeholder="Enter the amount">
+            <mat-label>{{'withdrawalAccount.form.account.label' | translate}}</mat-label>
+            <input matInput type="text" formControlName="amount" placeholder="{{'withdrawalAccount.form.account.label' | translate}}">
             <mat-error *ngIf="hasError('amount', 'required')">
-                Account name is <strong>required</strong>
+                <strong>{{'withdrawalAccount.form.account.inputRequired' | translate}}</strong>
             </mat-error>
         </mat-form-field>
 
-        <button mat-button class="btn-searchAccount" type="submit" [disabled]="!withdrawAccountForm.valid">Withdraw</button>
+        <button mat-raised-button class="btn-searchAccount" type="submit" [disabled]="!withdrawAccountForm.valid" color="primary">
+            {{'withdrawalAccount.form.button.validate' | translate}}
+        </button>
     </form>
 </div>

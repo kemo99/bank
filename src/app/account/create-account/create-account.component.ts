@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { AccountService } from '../service/account.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogContentComponent } from '../dialog-content/dialog-content.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-create-account',
@@ -12,9 +13,11 @@ import { DialogContentComponent } from '../dialog-content/dialog-content.compone
 export class CreateAccountComponent implements OnInit {
 
   createAccountForm!: FormGroup;
+  @ViewChild(FormGroupDirective) myForm;
   
   constructor(
     private accountService: AccountService,
+    private translateService: TranslateService,
     private dialog: MatDialog
     ) { }
 
@@ -29,20 +32,23 @@ export class CreateAccountComponent implements OnInit {
   }
 
   createAccount(accountName: string): void {
-    let isAdded = false;
     let message = "";
-    isAdded = this.accountService.createAccount(accountName);
-    if (isAdded) {
-      message = `${accountName} is added`;
-    } else {
-      message = `${accountName} already exist`;
-    }
-    //isAdded ? alert(`${accountName} is added`) : alert(`${accountName} already exist`);
+    this.accountService.createAccount(accountName).subscribe(isAdded => {
+      if (isAdded) {
+        message = `${accountName} ${this.translateService.instant('createAccount.form.isAdded')}`;
+      } else {
+        message = `${accountName} ${this.translateService.instant('createAccount.form.notAdded')}`;
+      }
+    });
     this.dialog.open(DialogContentComponent, {
       data: { content: message}
     });
-    // reset the form field
-    this.createAccountForm.reset();
+    this.resetForm();
   }
 
+  resetForm() {
+    if (this.myForm) {
+      this.myForm.resetForm();
+    }
+  }
 }

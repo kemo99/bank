@@ -13,11 +13,12 @@ import { DepositAccountComponent } from './account/deposit-account/deposit-accou
 import { WithdrawAccountComponent } from './account/withdraw-account/withdraw-account.component';
 import { BalanceAccountComponent } from './account/balance-account/balance-account.component';
 import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DialogContentComponent } from './account/dialog-content/dialog-content.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-import { HttpClient } from '@angular/common/http';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
@@ -42,7 +43,9 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     FormsModule,
     ReactiveFormsModule,
     MatTableModule,
+    MatButtonModule,
     MatDialogModule,
+    HttpClientModule,
     TranslateModule.forRoot({
       defaultLanguage: 'en',
       loader: {

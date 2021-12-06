@@ -4,6 +4,7 @@ import { History } from '../model/account';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogContentComponent } from '../dialog-content/dialog-content.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-balance-account',
@@ -19,6 +20,7 @@ export class BalanceAccountComponent implements OnInit {
 
   constructor(
     private accountService: AccountService,
+    private translateService: TranslateService,
     private dialog: MatDialog
   ) { }
 
@@ -29,19 +31,19 @@ export class BalanceAccountComponent implements OnInit {
   }
 
   searchAccountBalance(accountName: string): void {
-    let account = this.accountService.getAccount(accountName);
-    if (account.length === 0) {
-      //alert('This account name does not exist');
+   this.accountService.getAccount(accountName).subscribe(accounts => {
+     if(accounts.length == 0) {
       this.dialog.open(DialogContentComponent, {
-        data: { content: 'This account name does not exist'}
+        data: { content: `${this.translateService.instant('balanceAccount.form.searchAccount')}` }
       });
-    } else {
-        account.forEach(data => {
-          this.balance = data.balance;
-          this.dataSource = data.history;
-        });
+     } else {
+      accounts.forEach(data => {
+        this.balance = data.balance;
+        this.dataSource = data.history;
+      });
     }  
-    this.dataSource = [...this.dataSource];  //refresh the dataSource
+    this.dataSource = [...this.dataSource];  //refresh the dataSource 
+   });
   }
 
   hasError = (controlName: string, errorName: string) => {

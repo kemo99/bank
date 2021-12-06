@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { Operation } from '../model/account';
 import { AccountService } from '../service/account.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogContentComponent } from '../dialog-content/dialog-content.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-deposit-account',
@@ -13,9 +14,11 @@ import { DialogContentComponent } from '../dialog-content/dialog-content.compone
 export class DepositAccountComponent implements OnInit {
 
   depositAccountForm!: FormGroup;
+  @ViewChild(FormGroupDirective) myForm;
   
   constructor(
     private accountService: AccountService,
+    private translateService: TranslateService,
     private dialog: MatDialog
     ) { }
 
@@ -32,19 +35,25 @@ export class DepositAccountComponent implements OnInit {
 
   makeDeposit(account: { accountName: string, amount: string }): void {
     let message = "";
-    let success = this.accountService.operation(account.accountName, +account.amount, Operation.DEPOSIT);
-    if (success) {
-      message = `${account.amount} € is added on your account`;
-      //alert(`${account.amount} € is added on your account`);
-      this.depositAccountForm.reset();
-     } else {
-       message = 'This account name does not exist';
-      //alert('This account name does not exist');
-     }
-
+    this.accountService.operation(account.accountName, +account.amount, Operation.DEPOSIT)
+    .subscribe(isDone => {
+      if (isDone) {
+        message = `${account.amount} ${this.translateService.instant('depositAccount.form.isAdded')}`;
+        this.resetForm();
+       } else {
+         message = `${this.translateService.instant('depositAccount.form.notAdded')}`;
+       }
+    });
+    
      this.dialog.open(DialogContentComponent, {
        data: { content: message }
      })
+  }
+
+  resetForm() {
+    if (this.myForm) {
+      this.myForm.resetForm();
+    }
   }
 
 }

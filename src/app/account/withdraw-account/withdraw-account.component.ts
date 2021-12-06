@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { Operation } from '../model/account';
 import { AccountService } from '../service/account.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogContentComponent } from '../dialog-content/dialog-content.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-withdraw-account',
@@ -13,9 +14,11 @@ import { DialogContentComponent } from '../dialog-content/dialog-content.compone
 export class WithdrawAccountComponent implements OnInit {
 
   withdrawAccountForm!: FormGroup;
+  @ViewChild(FormGroupDirective) myForm;
   
   constructor(
     private accountService: AccountService,
+    private translateService: TranslateService,
     private dialog: MatDialog
     ) { }
 
@@ -32,19 +35,25 @@ export class WithdrawAccountComponent implements OnInit {
 
   withdrawAmount(account: { accountName: string, amount: string }): void {
     let message = "";
-    let success = this.accountService.operation(account.accountName, +account.amount, Operation.WITHDRAW);
-    if (success) {
-      message = `${account.amount} € is withdrawded on your account`;
-      //alert(`${account.amount} € is withdrawded on your account`);
-      this.withdrawAccountForm.reset();
-    } else {
-      message = 'Check your account name or your balance';
-      //alert('Check your account name or your balance');
-    }
+    this.accountService.operation(account.accountName, +account.amount, Operation.WITHDRAW)
+    .subscribe(isDone => {
+      if (isDone) {
+        message = `${account.amount} ${this.translateService.instant('withdrawalAccount.form.isRetrieve')}`;
+        this.resetForm();
+      } else {
+        message = `${this.translateService.instant('withdrawalAccount.form.notRetrieve')}`;
+      }
+    });
 
     this.dialog.open(DialogContentComponent, {
       data: { content: message }
     });
+  }
+
+  resetForm() {
+    if (this.myForm) {
+      this.myForm.resetForm();
+    }
   }
 
 }

@@ -1,22 +1,24 @@
 <div class="deposit">
     <form [formGroup]="depositAccountForm" (ngSubmit)="makeDeposit(depositAccountForm.value)">
         <mat-form-field class="account-name" appearance="fill">
-            <mat-label>Account</mat-label>
-            <input matInput type="text" formControlName="accountName" placeholder="Enter the account name">
-            <mat-hint align="end">Not more then 15 characters long.</mat-hint>
+            <mat-label>{{'depositAccount.form.account.label' | translate}}</mat-label>
+            <input matInput type="text" formControlName="accountName" placeholder="{{'depositAccount.form.account.placeholder' | translate}}">
+            <mat-hint align="end">{{'depositAccount.form.account.inputLength' | translate}}</mat-hint>
             <mat-error *ngIf="hasError('accountName', 'required')">
-                Account name is <strong>required</strong>
+                <strong>{{'depositAccount.form.account.inputRequired' | translate}}</strong>
             </mat-error>
         </mat-form-field>
 
         <mat-form-field class="deposit-amount" appearance="fill">
-            <mat-label>Amount</mat-label>
-            <input matInput type="text" formControlName="amount" placeholder="Enter the amount">
+            <mat-label>{{'depositAccount.form.deposit.label' | translate}}</mat-label>
+            <input matInput type="text" formControlName="amount" placeholder="{{'depositAccount.form.deposit.placeholder' | translate}}">
             <mat-error *ngIf="hasError('amount', 'required')">
-                Amount is <strong>required</strong>
+                <strong>{{'depositAccount.form.deposit.inputRequired' | translate}}</strong>
             </mat-error>
         </mat-form-field>
 
-        <button mat-button class="btn-searchAccount" type="submit" [disabled]="!depositAccountForm.valid">Make Deposit</button>
+        <button mat-raised-button class="btn-searchAccount" type="submit" [disabled]="!depositAccountForm.valid" color="primary">
+            {{'depositAccount.form.button.validate' | translate}}
+        </button>
     </form>
 </div>

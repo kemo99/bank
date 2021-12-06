@@ -4,6 +4,8 @@ import { By } from '@angular/platform-browser';
 
 import { AccountComponent } from './account.component';
 import { CreateAccountComponent } from './create-account/create-account.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { TranslateModule, TranslateService, TranslateLoader, TranslateFakeLoader } from '@ngx-translate/core';
 
 describe('AccountComponent', () => {
   let component: AccountComponent;
@@ -11,9 +13,18 @@ describe('AccountComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader },
+          isolate: false
+        }) 
+      ],
       declarations: [ 
         AccountComponent
        ],
+      providers: [
+        TranslateService
+      ],
        schemas: [ NO_ERRORS_SCHEMA ]
     })
     .compileComponents();
@@ -36,10 +47,20 @@ describe('AccountComponent Integration', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [
+        MatDialogModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader },
+          isolate: false
+        }) 
+      ],
       declarations: [ 
         AccountComponent,
         CreateAccountComponent
-       ]
+      ],
+      providers: [
+        TranslateService
+      ]
     })
     .compileComponents();
   });

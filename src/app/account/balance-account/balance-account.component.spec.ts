@@ -1,9 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { Operation } from '../model/account';
+import { Operation, Account } from '../model/account';
 import { AccountService } from '../service/account.service';
+import { TranslateModule, TranslateService, TranslateLoader, TranslateFakeLoader } from '@ngx-translate/core';
 
 import { BalanceAccountComponent } from './balance-account.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 describe('BalanceAccountComponent', () => {
   let component: BalanceAccountComponent;
@@ -11,7 +12,17 @@ describe('BalanceAccountComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BalanceAccountComponent ]
+      imports: [
+        MatDialogModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader },
+          isolate: false
+        }) 
+      ],
+      declarations: [ BalanceAccountComponent ],
+      providers: [
+        TranslateService
+      ]
     })
     .compileComponents();
   });
@@ -25,13 +36,6 @@ describe('BalanceAccountComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  it('should contains History button', () => {
-    const buttons = fixture.debugElement.queryAll(By.css('button'));
-    const addAccountButton: HTMLButtonElement =  buttons[0].nativeElement;
-    expect(addAccountButton.textContent).toContain('History');
-  });
-  
 });
 
 // test integration
@@ -39,13 +43,22 @@ describe('BalanceAccountComponent Integration', () => {
   let component: BalanceAccountComponent;
   let fixture: ComponentFixture<BalanceAccountComponent>;
   let service: AccountService;
+  let account: Account;
   const TEST_ACCOUNT = "Test account";
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [
+        MatDialogModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader },
+          isolate: false
+        }) 
+      ],
       declarations: [ BalanceAccountComponent ],
       providers: [
-        AccountService
+        AccountService,
+        TranslateService
       ]
     })
     .compileComponents();
@@ -70,7 +83,8 @@ describe('BalanceAccountComponent Integration', () => {
     service.operation(TEST_ACCOUNT, 400, Operation.WITHDRAW);
     service.operation(TEST_ACCOUNT, 1000, Operation.WITHDRAW);
     service.operation(TEST_ACCOUNT, 2500, Operation.WITHDRAW);
-    const account = service.accounts[0];
+    
+    service.accounts$.subscribe(accounts => account = accounts[0]);
     expect(account.name).toEqual("Test account");
     expect(account.balance).toEqual(1400);
   });

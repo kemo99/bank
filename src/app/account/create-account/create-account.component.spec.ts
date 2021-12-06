@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { AccountService } from '../service/account.service';
-
+import { TranslateModule, TranslateService, TranslateLoader, TranslateFakeLoader } from '@ngx-translate/core';
 import { CreateAccountComponent } from './create-account.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 describe('CreateAccountComponent', () => {
   let component: CreateAccountComponent;
@@ -11,8 +11,16 @@ describe('CreateAccountComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [
+        MatDialogModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader },
+          isolate: false
+        }) 
+      ],
       declarations: [ CreateAccountComponent ],
       providers: [
+        TranslateService,
         { provide: AccountService, useValue: serviceSpy }
       ]
     })
@@ -25,16 +33,10 @@ describe('CreateAccountComponent', () => {
     fixture.detectChanges();
 
     serviceSpy = jasmine.createSpyObj('AccountService', ['createAccount']);
-    serviceSpy.createAccount.and.returnValue(true);
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('should returns true when Account created', () => {
-    const res = serviceSpy.createAccount("dupont");
-    expect(res).toBeTrue();
   });
 
   it('should used "dupont" as an method param', () => {
@@ -42,10 +44,49 @@ describe('CreateAccountComponent', () => {
     expect(serviceSpy.createAccount).toHaveBeenCalledWith('dupont');
   });
 
-  it('should contains Add account button', () => {
-    const buttons = fixture.debugElement.queryAll(By.css('button'));
-    const addAccountButton: HTMLButtonElement =  buttons[0].nativeElement;
-    expect(addAccountButton.textContent).toContain('Add account');
+});
+
+
+describe('CreateAccountComponent Integration', () => {
+  let component: CreateAccountComponent;
+  let fixture: ComponentFixture<CreateAccountComponent>;
+  let service: AccountService;
+  const TEST_ACCOUNT = "dupont";
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [
+        MatDialogModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader },
+          isolate: false
+        }) 
+      ],
+      declarations: [ CreateAccountComponent ],
+      providers: [
+        AccountService,
+        TranslateService
+      ]
+    })
+    .compileComponents();
+  });
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(CreateAccountComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+    service = new AccountService();
+    //serviceSpy = jasmine.createSpyObj('AccountService', ['createAccount']);
+    //serviceSpy.createAccount.and.returnValue(true);
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('should returns true when Account created', () => {
+    const res$ = service.createAccount(TEST_ACCOUNT);
+    res$.subscribe(succes => expect(succes).toBeTrue());
   });
 
 });
